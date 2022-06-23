@@ -12,6 +12,9 @@ dotenv.config()
 const app = express();
 
 const connectStr = process.env.DATABASE_URL
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const pgPool = new pg.Pool({
     connectionString: connectStr,
     ssl:true,
