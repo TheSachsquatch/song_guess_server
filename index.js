@@ -14,6 +14,7 @@ dotenv.config()
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET,
     store: new SqLiteStore({
@@ -24,7 +25,7 @@ app.use(session({secret: process.env.SESSION_SECRET,
         }
     }),
     resave: true, saveUninitialized: true, cookie: {
-        maxAge: 2592000000, path: "/", secure: false,
+        maxAge: 2592000000, path: "/", secure: true, sameSite: "none"
     }}));
 app.use(cors({
     origin: ["http://localhost:3000", "https://song-guess.netlify.app"],
