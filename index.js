@@ -14,7 +14,7 @@ const app = express();
 const connectStr = process.env.DATABASE_URL
 const pgPool = new pg.Pool({
     connectionString: connectStr,
-    ssl: true
+    rejectUnauthorized: true
 })
 
 app.set("trust proxy", 1);
