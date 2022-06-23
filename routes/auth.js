@@ -6,7 +6,8 @@ const request = require('request')
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-
+const app_url = process.env.APP_URL;
+const server_url = process.env.SERVER_URL;
 var generateRandomString = function (length) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -58,7 +59,7 @@ auth.route('/auth/login').get((req,res)=>{
         response_type: "code",
         client_id: client_id,
         scope: scope,
-        redirect_uri: "http://localhost:5000/auth/callback",
+        redirect_uri: `${server_url}/auth/callback`,
         show_dialog: req.session.showDialog,
         state: state
     })
@@ -73,7 +74,7 @@ auth.route('/auth/callback').get((req, res)=>{
         url: 'https://accounts.spotify.com/api/token',
         form: {
         code: code,
-        redirect_uri: "http://localhost:5000/auth/callback",
+        redirect_uri: `${server_url}/auth/callback`,
         grant_type: 'authorization_code'
         },
         headers: {
@@ -88,7 +89,7 @@ auth.route('/auth/callback').get((req, res)=>{
             console.log(error)
         }
         if (!error && response.statusCode === 200) {
-            res.redirect('http://localhost:3000/')
+            res.redirect(app_url)
             req.session.access_token = body.access_token;
             req.session.refresh_token = body.refresh_token;
             console.log(req.sessionID);
