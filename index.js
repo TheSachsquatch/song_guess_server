@@ -27,7 +27,7 @@ app.use(session({secret: process.env.SESSION_SECRET,
         maxAge: 2592000000, path: "/", secure: false,
     }}));
 app.use(cors({
-    origin: ["http://localhost:3000", "https://"],
+    origin: ["http://localhost:3000", "https://song-guess.netlify.app"],
     methods: ["GET", "HEAD",  "POST", "PUT", "DELETE"],
     credentials: true
 }))
