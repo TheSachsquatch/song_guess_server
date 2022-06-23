@@ -37,7 +37,7 @@ app.use((req,res, next)=>{
         req.session.access_token = "";
         req.session.refresh_token = "";
         req.session.initialized = true;
-        req.session.showDialog= false;
+        req.session.showDialog= true;
         req.session.save();
         console.log(req.session.access_token)
     }
