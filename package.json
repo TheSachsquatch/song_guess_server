@@ -12,6 +12,7 @@
   "dependencies": {
     "better-sqlite3": "^7.5.3",
     "better-sqlite3-session-store": "0.0.3",
+    "connect-pg-simple": "^7.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",

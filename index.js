@@ -3,26 +3,26 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const sqlite = require("better-sqlite3");
-
-const SqLiteStore = require("better-sqlite3-session-store")(session)
-const db = new sqlite("sessions.db", {});
-
+const pgSession = require('connect-pg-simple')(session)
+const pg = require('pg');
 const port = process.env.PORT || 5000
 
 dotenv.config()
 
 const app = express();
 
+const connectStr = process.env.DATABASE_URL
+const pgPool = new pg.Pool({
+    connectionString: connectStr,
+    ssl: true
+})
+
 app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET,
-    store: new SqLiteStore({
-        client:db,
-        expires:{
-            clear:true,
-            intervalMs: 2592000000
-        }
+    store: new pgSession({
+        pool: pgPool,
+        tableName: 'session'
     }),
     resave: true, saveUninitialized: true, cookie: {
         maxAge: 2592000000, path: "/", secure: true, sameSite: "none"
