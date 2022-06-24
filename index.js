@@ -17,7 +17,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const pgPool = new pg.Pool({
     connectionString: connectStr,
-    ssl: {rejectUnauthorized: true}
+    ssl: {rejectUnauthorized: false}
 })
 
 const query = {
