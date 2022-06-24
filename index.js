@@ -17,9 +17,21 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const pgPool = new pg.Pool({
     connectionString: connectStr,
-    ssl: {rejectUnauthorized: false}
+    ssl: {rejectUnauthorized: true}
 })
 
+const query = {
+    text: 'CREATE TABLE IF NOT EXISTS session'
+}
+
+pgPool.query(query, (err, res) =>{
+    if(err){
+        console.log(err)
+    }
+    else{
+        console.log(res);
+    }
+})
 app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET,
