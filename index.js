@@ -13,18 +13,29 @@ const app = express();
 
 const connectStr = process.env.DATABASE_URL
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 const pgPool = new pg.Pool({
     connectionString: connectStr,
     ssl: {rejectUnauthorized: false}
+})
+
+const query = {
+    text: 'CREATE TABLE IF NOT EXISTS session ()'
+}
+
+pgPool.query(query, (err, res) =>{
+    if(err){
+        console.log(err)
+    }
+    else{
+        console.log(res);
+    }
 })
 
 app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET,
     store: new pgSession({
-        pool: pgPool
+        pool: pgPool,
     }),
     resave: true, saveUninitialized: true, cookie: {
         maxAge: 2592000000, path: "/", secure: true, sameSite: "none"
