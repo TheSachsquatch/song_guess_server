@@ -21,7 +21,7 @@ const pgPool = new pg.Pool({
 })
 
 const query = {
-    text: 'CREATE TABLE IF NOT EXISTS table_name=session'
+    text: 'CREATE TABLE IF NOT EXISTS "session"'
 }
 
 pgPool.query(query, (err, res) =>{
