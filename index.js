@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_SECRET,
     store: new pgSession({
         pool: pgPool,
+        createTableIfMissing: true
     }),
     resave: true, saveUninitialized: true, cookie: {
         maxAge: 2592000000, path: "/", secure: true, sameSite: "none"
